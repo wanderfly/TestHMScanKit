@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class MyScanActivity extends AppCompatActivity {
+public class TestReflectionActivity extends AppCompatActivity {
     private static final String TAG = "MyScanActivity";
 
     @Override
@@ -22,7 +22,7 @@ public class MyScanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_scan);
         Log.d(TAG, "onCreate: ");
-        // Todo 通过创建RemoteView方式无效，该构造函数未包访问权限
+        // Todo 通过创建RemoteView方式无效，该构造函数为包访问权限
         //RemoteView mRemoteView;
         //int scanFormatValue;
         //if (this.getIntent() != null) {
@@ -41,7 +41,8 @@ public class MyScanActivity extends AppCompatActivity {
         //Method privateMethod=ReflectionUtils.getDeclareMethod(son,"privateMethod");
         //Log.d(TAG, "onCreate: 私有方法"+privateMethod);
 
-        Son son = new Son();
+        //Todo 测试子类获取父类的方式，反射机制
+        /*Son son = new Son();
         Class<?> clazz = son.getClass();
         Class<?> parent = clazz.getSuperclass();
         Field[] fields = clazz.getDeclaredFields();
@@ -62,23 +63,24 @@ public class MyScanActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: fields:" + fields.length);
         for (Field f : fields) {
             Log.d(TAG, "onCreate: " + f.getName());
-        }
+        }*/
 
         //Todo 测试新的方式
-        //try {
-        //    Foo foo = new Foo("建立一个测试对象");
-        //    //Class<?> clazz = foo.getClass();
-        //    Class<?> clazz = foo.getClass();
-        //    Method m1 = clazz.getDeclaredMethod("outInfo");
-        //    Method m2 = clazz.getDeclaredMethod("setMsg",String.class);
-        //    Method m3 = clazz.getDeclaredMethod("getMsg");
-        //    m1.invoke(foo);
-        //    m2.invoke(foo,"设置新的set值");
-        //    String newValue= (String) m3.invoke(foo);
-        //    Log.d(TAG, "onCreate: "+newValue);
-        //} catch (Exception e) {
-        //    e.printStackTrace();
-        //}
+        try {
+            Foo foo = new Foo("建立一个测试对象");
+            //Class<?> clazz = foo.getClass();
+            Class<?> clazz = foo.getClass();
+            Method m1 = clazz.getDeclaredMethod("outInfo");
+            Method m2 = clazz.getDeclaredMethod("setMsg",String.class);
+            Method m3 = clazz.getDeclaredMethod("getMsg");
+            m1.invoke(foo);
+            m2.setAccessible(true);
+            m2.invoke(foo,"设置新的set值");
+            String newValue= (String) m3.invoke(foo);
+            Log.d(TAG, "onCreate: "+newValue);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     class Foo {
@@ -88,7 +90,7 @@ public class MyScanActivity extends AppCompatActivity {
             this.msg = msg;
         }
 
-        public void setMsg(String msg) {
+        private void setMsg(String msg) {
             this.msg = msg;
         }
 

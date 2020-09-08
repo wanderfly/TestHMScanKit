@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.huawei.hms.hmsscankit.ScanKitActivity;
 import com.huawei.hms.hmsscankit.ScanUtil;
 import com.huawei.hms.ml.scan.HmsScan;
 import com.kevin.hmscankit.reflection.ReflectionUtils;
@@ -49,14 +50,14 @@ public class MainActivity extends AppCompatActivity {
             //ScanUtil.startScan(this, CODE_REQUEST_SCAN_ONE, new HmsScanAnalyzerOptions.Creator().create());
 
             //方案二:跳转到指定的的扫描activity
-            //Intent intent=new Intent();
-            //intent.setClass(this,ScanKitActivity.class);
-            //startActivityForResult(intent,CODE_REQUEST_SCAN_ONE);
+            Intent intent=new Intent();
+            intent.setClass(this, ScanKitActivity.class);
+            startActivityForResult(intent,CODE_REQUEST_SCAN_ONE);
 
             //方案三:跳转到自定义的Activity
-            Intent intent1 = new Intent();
-            intent1.setClass(this, MyScanActivity.class);
-            startActivityForResult(intent1, CODE_REQUEST_SCAN_ONE);
+            //Intent intent1 = new Intent();
+            //intent1.setClass(this, MyScanActivity.class);
+            //startActivityForResult(intent1, CODE_REQUEST_SCAN_ONE);
         }
 
     }
