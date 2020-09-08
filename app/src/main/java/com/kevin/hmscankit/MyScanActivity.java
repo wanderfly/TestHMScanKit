@@ -50,7 +50,7 @@ public class MyScanActivity extends AppCompatActivity {
             Field privateField = parent.getDeclaredField("privateField");
             Method method = parent.getDeclaredMethod("privateMethod");
             method.setAccessible(true);
-            method.invoke(parent,"publicMethod");
+            method.invoke(son,"publicMethod");
             //method.invoke(parent,"privateMethod",null,null);
             Log.d(TAG, "onCreate: " + privateField.getName());
             Log.d(TAG, "onCreate: " + method.getName());
@@ -64,6 +64,40 @@ public class MyScanActivity extends AppCompatActivity {
             Log.d(TAG, "onCreate: " + f.getName());
         }
 
+        //Todo 测试新的方式
+        //try {
+        //    Foo foo = new Foo("建立一个测试对象");
+        //    //Class<?> clazz = foo.getClass();
+        //    Class<?> clazz = foo.getClass();
+        //    Method m1 = clazz.getDeclaredMethod("outInfo");
+        //    Method m2 = clazz.getDeclaredMethod("setMsg",String.class);
+        //    Method m3 = clazz.getDeclaredMethod("getMsg");
+        //    m1.invoke(foo);
+        //    m2.invoke(foo,"设置新的set值");
+        //    String newValue= (String) m3.invoke(foo);
+        //    Log.d(TAG, "onCreate: "+newValue);
+        //} catch (Exception e) {
+        //    e.printStackTrace();
+        //}
+    }
 
+    class Foo {
+        private String msg;
+
+        public Foo(String msg) {
+            this.msg = msg;
+        }
+
+        public void setMsg(String msg) {
+            this.msg = msg;
+        }
+
+        public String getMsg() {
+            return msg;
+        }
+
+        public void outInfo() {
+            Log.d(TAG, "outInfo: 这是测试Java反射的测试类");
+        }
     }
 }
